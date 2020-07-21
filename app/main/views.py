@@ -12,7 +12,7 @@ from flask_paginate import Pagination, get_page_parameter
 
 @main.route('/', methods=['GET', 'POST'])
 def index():
-    title= 'Home | SoftBlog'
+    title= 'Home | KingsBlog'
     quote= get_quotes()
     quotes= repeat_get_quotes(10, get_quotes)
     all_posts=Post.get_posts()
@@ -52,7 +52,7 @@ def posts(post_id):
         db.session.add(new_mail)
         db.session.commit()
         return redirect(url_for('main.posts', post_id=post.id))
-    title= post.title + ' | SoftBlog'
+    title= post.title + ' | KingsBlog'
     return render_template('posts.html', title=title, post=post, comments=all_comments, comment_form=comment_form, format_post=format_post, subscribe_form=subscribe_form)
 
 @main.route('/Post/<post_id>')
@@ -66,7 +66,7 @@ def single_post(post_id):
 @main.route('/New-post', methods=['GET', 'POST'])
 @login_required
 def new_post():
-    title = 'New Post | SoftBlog'
+    title = 'New Post | KingsBlog'
     heading = "New Post"
     form = PostForm()
     if form.validate_on_submit() and 'photo' in request.files:
@@ -80,7 +80,7 @@ def new_post():
         for subscriber in mailList:
             subscribers.append(subscriber.email)
         for subscriber in subscribers:
-            subscribe_message("New post on SoftBlog!","email/subscribe", subscriber, user = current_user, post=post, heading=heading)
+            subscribe_message("New post on KingsBlog!","email/subscribe", subscriber, user = current_user, post=post, heading=heading)
         flash('Your post has been posted!', 'success')
         return redirect(url_for('main.index'))
 
@@ -108,14 +108,14 @@ def update_post(post_id):
         for subscriber in mailList:
             subscribers.append(subscriber.email)
         for subscriber in subscribers:
-            subscribe_message("A post on SoftBlog has been updated!","email/subscribe", subscriber, user = current_user, heading=heading)
+            subscribe_message("A post on    kingsBlog has been updated!","email/subscribe", subscriber, user = current_user, heading=heading)
         flash('Your post has been updated!', 'success')
         return redirect(url_for('main.posts', post_id = post.id))
     elif request.method == 'GET':
         form.title.data = post.title
         form.post_content.data = post.post_content
         form.short_description.data = post.short_description
-    title = "Update Post | SoftBlog"
+    title = "Update Post | KingsBlog"
     return render_template('posts/add_post.html',title=title, post_form=form, heading=heading)
 
 @main.route('/Posts/<post_id>/delete', methods=['POST'])
@@ -132,7 +132,7 @@ def delete_post(post_id):
 @main.route("/Comment/<int:post_id>", methods=['GET', 'POST'])
 @login_required
 def new_comment(post_id):
-    title = 'New Comment | SoftBlog'
+    title = 'New Comment | KingsBlog'
     form = CommentForm()
     post = Post.query.filter_by(id = post_id).first()
     if form.validate_on_submit():
